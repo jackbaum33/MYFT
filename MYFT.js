@@ -194,3 +194,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const images = document.querySelectorAll('img');
+  let loadedImages = 0;
+  
+  function imageLoaded() {
+    loadedImages++;
+    if (loadedImages === images.length) {
+      hideLoadingScreen();
+    }
+  }
+  
+  images.forEach(img => {
+    if (img.complete) {
+      imageLoaded();
+    } else {
+      img.addEventListener('load', imageLoaded);
+      img.addEventListener('error', imageLoaded);
+    }
+  });
+  
+  // Fallback in case some images fail to load
+  setTimeout(hideLoadingScreen, 5000);
+});
